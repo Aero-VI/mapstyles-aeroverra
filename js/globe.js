@@ -39,6 +39,11 @@ var BASEMAP_DEFS = {
     paint: { 'raster-opacity': 0.9, 'raster-brightness-max': 0.55, 'raster-saturation': 0.05, 'raster-contrast': 0.15 },
     attribution: __SAT_ATTR
   },
+  cartodark: {
+    label: 'CARTO Dark Matter  (the ORIGINAL)',
+    kind: 'vector',
+    url: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
+  },
   ofmdark: {
     label: 'Midnight  (closest to the old CARTO look)',
     kind: 'vector',
@@ -85,7 +90,7 @@ var BASEMAP_DEFS = {
   }
 };
 
-var BASEMAP_ORDER = ['satdark', 'sathybrid', 'ofmdark', 'ofmfiord', 'navy', 'relief', 'satfull', 'cur'];
+var BASEMAP_ORDER = ['cartodark', 'satdark', 'sathybrid', 'ofmdark', 'ofmfiord', 'navy', 'relief', 'satfull', 'cur'];
 var CURRENT_BASEMAP = 'satdark';
 try { var __sv = localStorage.getItem('basemap'); if (__sv && BASEMAP_DEFS[__sv]) CURRENT_BASEMAP = __sv; } catch (e) {}
 var __styleCache = {};
@@ -114,6 +119,8 @@ function setBasemap(key) {
   if (!BASEMAP_DEFS[key]) return;
   CURRENT_BASEMAP = key;
   try { localStorage.setItem('basemap', key); } catch (e) {}
+  var __sel = document.getElementById('basemap-select');
+  if (__sel && __sel.value !== key) __sel.value = key;
   var center = map ? map.getCenter() : null;
   var zoom = map ? map.getZoom() : null;
   if (map) { try { map.remove(); } catch (e) {} map = null; }
