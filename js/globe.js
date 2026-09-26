@@ -134,7 +134,7 @@ function __injectBasemapPicker() {
   var sel = document.createElement('select');
   sel.id = 'basemap-select';
   sel.title = 'Basemap style';
-  sel.style.cssText = 'background:#101725;color:#7df;border:1px solid #23406a;border-radius:6px;padding:7px 9px;font:12px ui-monospace,monospace;max-width:260px;';
+  sel.style.cssText = 'background:#101725;color:#7df;border:1px solid #23406a;border-radius:6px;padding:7px 9px;font:12px ui-monospace,monospace;max-width:230px;';
   BASEMAP_ORDER.forEach(function (k) {
     var o = document.createElement('option');
     o.value = k; o.textContent = BASEMAP_DEFS[k].label;
@@ -142,8 +142,12 @@ function __injectBasemapPicker() {
     sel.appendChild(o);
   });
   sel.addEventListener('change', function () { setBasemap(sel.value); });
+  var lbl = document.createElement('span');
+  lbl.textContent = 'BASEMAP';
+  lbl.style.cssText = 'color:#5b7fa6;font:10px ui-monospace,monospace;letter-spacing:.08em;';
+  wrap.appendChild(lbl);
   wrap.appendChild(sel);
-  bar.appendChild(wrap);
+  if (bar.firstChild) { bar.insertBefore(wrap, bar.firstChild); } else { bar.appendChild(wrap); }
 }
 document.addEventListener('DOMContentLoaded', __injectBasemapPicker);
 setTimeout(__injectBasemapPicker, 800);
